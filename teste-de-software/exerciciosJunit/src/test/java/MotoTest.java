@@ -9,18 +9,15 @@ public class MotoTest {
     public static void fazAntes() {
         System.out.println("-inicio testes-");
     }
-
     @AfterAll
     public static void fazDepois() {
         System.out.println("-fim testes-");
     }
-
     @BeforeEach
     public void fazAntesCada() {
         moto = new Moto("motoTeste");
         System.out.println("===inicio novo teste===");
     }
-
     @AfterEach
     public void fazDepoisCada() {
         System.out.println("===fim teste===");
@@ -38,4 +35,8 @@ public class MotoTest {
     Altere o método acelerar para gastar 0.01L de gasolina para cada km/h acelerado. Caso a gasolina acabe deve parar de acelerar.
 
     Faça os testes para os métodos abastecer e acelerar
+
+    Parte2: Considerando os exercícios sobre revisão de POO (item 2.2) 
+    faça uma classe de teste (Junit5) para cada grupo de teste do arquivo passado como parâmetro, 
+    garanta que os testes executem na mesma ordem do arquivo TestaApp
 */
