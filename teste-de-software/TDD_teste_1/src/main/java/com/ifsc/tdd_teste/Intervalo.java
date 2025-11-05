@@ -3,10 +3,9 @@ package com.ifsc.tdd_teste;
 public class Intervalo {
     int segundos;
     public Intervalo(int horas, int minutos, int segundos){
-        if (horas < 0 || minutos < 0 || segundos < 0) {
+        if (horas < 0 || minutos < 0 || segundos < 0)
             throw new IllegalArgumentException("Valores negativos não são permitidos.");
-        }
-        this.segundos = segundos + minutos*60 + horas*3600;    
+        this.segundos = segundos + minutos*60 + horas*3600;
     }
     
     public int horas(){
@@ -27,9 +26,8 @@ public class Intervalo {
     }
     public Intervalo subtraiIntervalo(Intervalo outro){
         int totalSegundos = this.segundos - outro.segundos;
-        if (totalSegundos<0) {
+        if (totalSegundos<0)
             throw new RuntimeException("Resultado negativo.");
-        }
         return new Intervalo(0, 0, totalSegundos);
     }
     @Override
