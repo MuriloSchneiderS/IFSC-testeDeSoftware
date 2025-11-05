@@ -1,23 +1,64 @@
 import org.junit.jupiter.api.*;
 import com.ifsc.tdd_teste.Intervalo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class IntervaloTeste {
     private final Intervalo intervalo = new Intervalo(3,4,5);
+    private final Intervalo intervalo2 = new Intervalo(6,7,8);
     
+    @BeforeAll
+    public static void fazAntes() {
+        System.out.println("-inicio testes-");
+    }
+    @AfterAll
+    public static void fazDepois() {
+        System.out.println("-fim testes-");
+    }
+    @BeforeEach
+    public void fazAntesCada() {
+        System.out.println("===inicio novo teste===");
+    }
+    @AfterEach
+    public void fazDepoisCada() {
+        System.out.println("===fim teste===");
+    }
+    //Testes
     @Test
-    @DisplayName("intervalos")
+    @DisplayName("Testes de interação entre intervalos.")
     public void testaIntervalos(){
-        Intervalo intervalo = new Intervalo(3,4,5);
-        Intervalo intervalo2 = new Intervalo(6,7,8);
-        
+        //Soma +
+        Assertions.assertEquals("09:11:13" , intervalo.somaIntervalos(intervalo2).toString());
+        //Subtracao >-<
+        Assertions.assertEquals("03:03:03", intervalo2.subtraiIntervalo(intervalo).toString());
+        //Subtracao <->
+        RuntimeException exception = assertThrows(RuntimeException.class, ()->{
+            intervalo.subtraiIntervalo(intervalo2);
+        });//guarda mensagem de erro de subtrair intervalo maior do menor
+        assertEquals("Resultado negativo.", exception.getMessage());
+        //Comparacao ==
+        Assertions.assertEquals(false, intervalo.equals(intervalo2));
+    }
+    @Test
+    @DisplayName("Testa criação de intervalo com valor negativo.")
+    void testValoresNegativos() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->{
+            new Intervalo(-1, 0, 10);
+        });
+        assertEquals("Valores negativos não são permitidos.", exception.getMessage());
+    }
+    @Test
+    @DisplayName("Testes das funções de retorno de horas, minutos e segundos do intervalo.")
+    public void testaGetters(){
         Assertions.assertEquals(3, intervalo.horas());
         Assertions.assertEquals(4, intervalo.minutos());
         Assertions.assertEquals(5, intervalo.segundos());
+        Assertions.assertEquals("03:04:05", intervalo.toString());
     }
     @Test
     @DisplayName("Total de minutos do intervalo.")
     public void testaTotalMinutos(){
-        Assertions.assertEquals(180, intervalo.totalMinutos());
+        Assertions.assertEquals(184, intervalo.totalMinutos());
     }
 }
 /*
