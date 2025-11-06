@@ -1,7 +1,14 @@
 package com.ifsc.tdd_teste;
 
-public class Cliente {
+import java.util.Date;
 
+public class Cliente{
+    private String nome, cpf;
+    private Date dataDeNascimento;
+    public Cliente(String nome, String cpf, String dataDeNascimento) throws ClienteException{
+        
+    }
+    //if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")){throw new ClienteException("CPF inválido: O CPF deve estar no formato XXX.XXX.XXX-XX.");
 }
 /*
 1) todo cliente deve ter nome, cpf e data de nascimento
