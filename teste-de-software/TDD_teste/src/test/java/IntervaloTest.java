@@ -3,7 +3,7 @@ import com.ifsc.tdd_teste.Intervalo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class IntervaloTeste {
+public class IntervaloTest {
     private final Intervalo intervalo = new Intervalo(3,4,5);
     private final Intervalo intervalo2 = new Intervalo(6,7,8);
     
