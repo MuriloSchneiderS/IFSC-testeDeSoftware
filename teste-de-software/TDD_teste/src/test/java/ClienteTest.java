@@ -9,21 +9,21 @@ public class ClienteTest {
         
     @Test
     @DisplayName("Classe de teste criada antes de Cliente.")
-    public void testaClienteAntesDeCrialo(){
+    public void testaClienteAntesDeCriacao(){
         //CPF
-        Cliente cliente = null;
-        //cpf valido
+        final Cliente[] cliente = {null};
+        // CPF Valido
         assertDoesNotThrow(() -> {
-            cliente = new Cliente("nome", "123.456.789-09", "01/01/2000");
+            cliente[0] = new Cliente("cliente 0", "123.456.789-09", "01/01/2000");
         });
         // Verifica que o cliente foi criado com sucesso
-        assertNotNull(cliente);
-        //cpf no formato errado
+        assertNotNull(cliente[0]);
+        // CPF no formato errado
         RuntimeException excecaoCPF = assertThrows(RuntimeException.class, () -> {
-            cliente = new Cliente("cliente 1", "123456.78.909", "01/01/2000");
+            cliente[0] = new Cliente("cliente 0", "123456.78.909", "01/01/2000");
         });
         Assertions.assertEquals("cpf deve ser no formato XXX.YYY.ZZZ-WW.", excecaoCPF.getMessage());
-        
+
         //NOME
         
         //DATA DE NASCIMENTO
