@@ -1,7 +1,30 @@
 package com.ifsc.tdd_teste;
 
 public class Conta {
+    private double saldo, limite;
+    public Conta(double saldo, double limite){
+        
+    }
+    
+    public double sacar(double quantia){
+        return 0;
+    }
+    public double depositar(double quantia){
+        return 0;
+    }
+    public Conta transferir(Conta destino, double quantia){
+        return new Conta(destino.saldo, destino.limite);
+    }
 
+    public double getSaldo() {
+        return saldo;
+    }
+    public double getLimite() {
+        return limite;
+    }
+    public void setLimite(double quantia){
+        
+    }
 }
 /*
 1) deve ser possível sacar uma determinada quantia da conta, o método retorna o valor sacado.
