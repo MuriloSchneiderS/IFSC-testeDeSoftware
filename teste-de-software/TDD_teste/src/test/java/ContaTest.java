@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ContaTest {
-    final Conta[] conta = {null};
+    final Conta[] conta = new Conta[5];
     
     @BeforeEach
     @Test
@@ -24,8 +24,11 @@ public class ContaTest {
         assertDoesNotThrow(() -> {
             conta[0].sacar(500);
         });
+        Assertions.assertEquals("quantia deve ser positiva.", assertThrows(ContaException.class, ()->{
+            conta[0].sacar(-500);
+        }).getMessage());
         assertEquals(500, conta[0].sacar(500));//Saque válido
-        assertEquals(0, conta[0].sacar(2000));//Saque inválido, deve retornar 0
+        assertEquals(0, conta[0].sacar(200000));//Saque inválido, deve retornar 0
     }
     //2) deve ser possível depositar um valor positivo na conta. Será retornado o saldo final após o depósito.
     //2.1) Caso o valor não seja positivo, deve-se lançar uma ContaException.
@@ -33,6 +36,7 @@ public class ContaTest {
     public void testaDeposito(){
         assertDoesNotThrow(() -> {
             conta[0].depositar(500);
+            conta[0].sacar(500);
         });
         assertEquals(1500, conta[0].depositar(500));//Testa retorno de deposito valido
         ContaException excecaoDeposito = assertThrows(ContaException.class, ()->{
@@ -64,18 +68,19 @@ public class ContaTest {
             Assertions.assertEquals(2000, conta[0].getSaldo());//Testa se a transferencia alterou o saldo da conta[0] de acordo
         });
         
-        Assertions.assertEquals("quantidade deve ser positiva.", assertThrows(ContaException.class, ()->{
-            conta[0] = conta[1].transferir(conta[0], -1000);
-        }).getMessage());
-        
-        Assertions.assertEquals("quantidade deve ser positiva.", assertThrows(ContaException.class, ()->{
-            conta[0]=null;
+        Assertions.assertEquals("transferencia deve ser positiva.", assertThrows(ContaException.class, ()->{
             conta[0] = conta[1].transferir(conta[0], -1000);
         }).getMessage());
         
         Assertions.assertEquals("saldo da conta de origem insuficiente.", assertThrows(ContaException.class, ()->{
             conta[0] = conta[1].transferir(conta[0], 800000);
         }).getMessage());
+        
+        Assertions.assertEquals("conta destino nao pode ser nula.", assertThrows(ContaException.class, ()->{
+            conta[0]=null;
+            conta[0] = conta[1].transferir(conta[0], -1000);
+        }).getMessage());
+        
     }
 }
 /*
