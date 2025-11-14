@@ -1,6 +1,7 @@
 package com.ifsc.teste_integracao;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Pessoa{
     private int id;
@@ -35,6 +36,18 @@ public class Pessoa{
 
     public void setDataNasc(LocalDate dataNasc){
         this.dataNasc = dataNasc;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pessoa pessoa = (Pessoa) o;
+        return id == pessoa.id;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
 //Pessoa: atributos: nome, id, dataNasc (LocalDate). Faça getters e setters e Construtor

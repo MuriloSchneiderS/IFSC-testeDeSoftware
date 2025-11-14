@@ -15,22 +15,18 @@ public class PessoaDAO {
         conexao = con;
     }
     
-    public void insert(Pessoa p){
+    public void insert(Pessoa p) throws SQLException{
         String sqlInstrucao = "INSERT INTO pessoa("
                 + " id,"
                 + " nome,"
                 + " data_nascimento"
                 + " )"
                 + " VALUES (?,?,?)";
-        PreparedStatement pstm = null;
-        try {
-            pstm = conexao.prepareStatement(sqlInstrucao);
+        try (PreparedStatement pstm = conexao.prepareStatement(sqlInstrucao)) {
             pstm.setInt(1, p.getId());
             pstm.setString(2, p.getNome());
             pstm.setDate(3, java.sql.Date.valueOf(p.getDataNasc()));
             pstm.execute();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
     }
     
@@ -50,7 +46,7 @@ public class PessoaDAO {
                 return new Pessoa(
                     rst.getInt("id"),
                     rst.getString("nome"),
-                    rst.getDate("data_nascimento").toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+                    rst.getDate("data_nascimento").toLocalDate()
                 );
             }
         } catch (SQLException ex) {
@@ -72,6 +68,7 @@ public class PessoaDAO {
             pstm.setInt(1, p.getId());
             pstm.setString(2, p.getNome());
             pstm.setDate(3, java.sql.Date.valueOf(p.getDataNasc()));
+            pstm.setInt(4, p.getId());
             pstm.execute();
         }catch (SQLException ex) {
             ex.printStackTrace();
@@ -109,19 +106,19 @@ public class PessoaDAO {
                 pessoa = new Pessoa(
                         rst.getInt("id"),
                         rst.getString("nome"),
-                        rst.getDate("data_nascimento").toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+                        rst.getDate("data_nascimento").toLocalDate()
                 );
                 lista.add(pessoa);
             }
+            return lista;
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
             return lista;
         }
     }
     
-    public void save(Pessoa p){//caso o objeto tenha id (persistente) chame o update, caso contrário(transiente) chame o insert
-        if(p.getId() >= 0)
+    public void save(Pessoa p) throws SQLException{//caso o objeto tenha id (persistente) chame o update, caso contrário(transiente) chame o insert
+        if(p.getId() > 0)
             update(p);
         else
             insert(p);
