@@ -8,8 +8,8 @@ public class Pessoa{
     private LocalDate dataNasc;
 
     public Pessoa(int id, String nome, LocalDate dataNasc) {
-        this.nome = nome;
         this.id = id;
+        this.nome = nome;
         this.dataNasc = dataNasc;
     }
 

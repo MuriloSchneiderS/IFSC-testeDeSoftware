@@ -19,7 +19,7 @@ public class PessoaDAO {
         String sqlInstrucao = "INSERT INTO pessoa("
                 + " id,"
                 + " nome,"
-                + " data_nascimento,"
+                + " data_nascimento"
                 + " )"
                 + " VALUES (?,?,?)";
         PreparedStatement pstm = null;
@@ -40,7 +40,6 @@ public class PessoaDAO {
                 + " nome,"
                 + " data_nascimento"
                 + " FROM pessoa WHERE id=?";
-        Connection conexao = ConnectionFactory.getConnection();
         PreparedStatement pstm = null;
         ResultSet rst = null;
         try {
@@ -76,14 +75,12 @@ public class PessoaDAO {
             pstm.execute();
         }catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
-            return;
         }
     }
     
     public void delete(int id){
-        String sqlInstrucao = "DELETE FROM pessoa "
-                + "WHERE "
+        String sqlInstrucao = "DELETE FROM pessoa"
+                + " WHERE"
                 + " id=?";
         PreparedStatement pstm = null;
         try{
@@ -104,11 +101,12 @@ public class PessoaDAO {
         PreparedStatement pstm = null;
         ResultSet rst = null;
         List<Pessoa> lista = new ArrayList<>();
+        Pessoa pessoa;
         try {
             pstm = conexao.prepareStatement(sqlInstrucao);
             rst = pstm.executeQuery();
             while (rst.next()) {
-                Pessoa pessoa = new Pessoa(
+                pessoa = new Pessoa(
                         rst.getInt("id"),
                         rst.getString("nome"),
                         rst.getDate("data_nascimento").toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()
